@@ -23,7 +23,7 @@ const checkCarPayload = (req, res, next) => {
   } else if (!make) {
     error.message = 'make is missing';
   }else if (!model) {
-    error.message = 'model is  missing';
+    error.message = 'model is missing';
   }else if (!mileage) {
     error.message = 'mileage is missing';
   }

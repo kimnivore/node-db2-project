@@ -12,9 +12,11 @@ const getByVin = (vin) => {
   return db('cars').where('vin', vin).first();
 }
 
-const create =  car => {
+const create =  (car) => {
   return db('cars').insert(car)
-    .then(([id]) => getByVin(id));
+    .then(([id]) => {
+      return getById(id)
+    });
 }
 
 module.exports = { getAll, getById, getByVin, create };
