@@ -1,6 +1,5 @@
-const Cars = require('./cars-model');
 const router = require('express').Router();
-
+const Cars = require('./cars-model');
 const { checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique } = require('./cars-middleware');
 
 
@@ -22,24 +21,12 @@ router.get('/:id', checkCarId, async (req, res, next) => {
 // [POST] /api/cars returns the created car.
 router.post('/', checkCarPayload, checkVinNumberValid, checkVinNumberUnique, async (req, res, next) => {
     try{
-        const car = await Cars.create({
-            vin: req.body.vin.trim(),
-            make: req.body.make.trim(),
-            model: req.body.model.trim(),
-            mileage: req.body.mileage.trim(),
-        })
+        const car = await Cars.create(req.body)
         res.status(201).json(car)
     } catch(err) {
         next(err)
     }
 });
 
-
-router.use((err, req, res, next) => { // eslint-disable-line
-    res.status(err.status || 500).json({
-        message: err.message,
-        stack: err.stack,
-    })
-});
 
 module.exports = router;
